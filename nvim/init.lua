@@ -36,7 +36,6 @@ require("lazy").setup({
 	require("plugins.formating"),
 	require("plugins.misc"),
 	require("plugins.dashboard"),
-	-- require("plugins.bufferline"),
 	require("plugins.mini"),
 	-- require("plugins.lualine"),
 	require("plugins.harpoon"),

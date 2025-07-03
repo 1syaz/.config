@@ -37,11 +37,21 @@ vim.keymap.set("n", "<Left>", ":vertical resize -2<CR>", opts)
 vim.keymap.set("n", "<Right>", ":vertical resize +2<CR>", opts)
 
 -- buffers (navigate between files)
--- vim.keymap.set("n", "<Tab>", ":bnext<CR>", opts)
--- vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", opts)
-vim.keymap.set("n", "<leader>bd", function()
-	vim.cmd("Bdelete")
-end, opts)
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", opts)
+vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", opts)
+vim.keymap.set("n", "<leader>q", function()
+	local buf = vim.api.nvim_get_current_buf()
+
+	if vim.bo.modified then
+		vim.cmd("write")
+	end
+
+	if #vim.api.nvim_list_bufs() > 1 then
+		vim.cmd("bprevious")
+	end
+
+	vim.cmd("bdelete " .. buf)
+end, { desc = "Save and delete current buffer", noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>n", "<cmd> enew <CR>", opts) -- new buffer
 
@@ -78,7 +88,7 @@ vim.keymap.set("v", "p", '"_dP', opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 -- Delete without yanking in visual mode
 vim.keymap.set("v", "d", '"_d', { noremap = true, silent = true })
@@ -102,3 +112,17 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 vim.keymap.set("n", "k", "gk")
 vim.keymap.set("n", "j", "gj")
+
+-- Temp
+vim.keymap.set("n", "<Esc>", function()
+	local closed = false
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_win_get_config(win).relative ~= "" then
+			vim.api.nvim_win_close(win, true)
+			closed = true
+		end
+	end
+	if not closed then
+		vim.cmd("stopinsert") -- behaves like regular <Esc>
+	end
+end, opts)
