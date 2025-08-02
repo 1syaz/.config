@@ -1,6 +1,6 @@
 require("core.options")
 require("core.keymaps")
--- LAZY NVIM Package manager
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -8,35 +8,25 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		error("Error cloning lazy.nvim:\n" .. out)
 	end
-	vim.api.nvim_create_autocmd("FileType", {
-		pattern = "*",
-		callback = function()
-			vim.opt.formatoptions:remove({ "c", "r", "o" })
-		end,
-	})
 end
+
 vim.opt.rtp:prepend(lazypath)
---  To update plugins you can run
---    :Lazy update
---
---
--- NOTE: Here is where you install your plugins.
 
 require("lazy").setup({
 	require("plugins.colortheme"),
-	require("plugins.oil"),
-	require("plugins.treesitter"),
-	require("plugins.formating"),
 	require("plugins.misc"),
-	require("plugins.dashboard"),
-	require("plugins.mini"),
-	require("plugins.wakatime"),
-	require("plugins.gitstuff"),
-	require("plugins.harpoon"),
+	require("plugins.oil"),
 	require("plugins.telescope"),
-	-- require("plugins.vim-visual-multi"),
+	require("plugins.undotree"),
+	require("plugins.treesitter"),
+	require("plugins.conform"),
+	require("plugins.mini"),
+	require("plugins.nvim-cmp"),
+	require("plugins.lsp.mason"),
 	require("plugins.lsp.lsp"),
-	require("plugins.lualine"),
+	require("plugins.linter"),
+	require("plugins.harpoon"),
 	require("plugins.zen"),
-	require("plugins.bufferline"),
+	require("plugins.wakatime"),
+	-- require("plugins.gitstuff"),
 })

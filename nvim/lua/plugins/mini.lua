@@ -1,44 +1,10 @@
 return {
-	-- {
-	--
-	-- 	"echasnovski/mini.comment",
-	-- 	version = false,
-	-- 	dependencies = {
-	-- 		"JoosepAlviste/nvim-ts-context-commentstring",
-	-- 	},
-	-- 	config = function()
-	-- 		-- disable the autocommand from ts-context-commentstring
-	-- 		require("ts_context_commentstring").setup({
-	-- 			enable_autocmd = false,
-	-- 		})
-	--
-	-- 		require("mini.comment").setup({
-	-- 			-- tsx, jsx, html , svelte comment support
-	-- 			options = {
-	-- 				custom_commentstring = function()
-	-- 					return require("ts_context_commentstring.internal").calculate_commentstring({
-	-- 						key = "commentstring",
-	-- 					}) or vim.bo.commentstring
-	-- 				end,
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
-	{
+    {
 		"echasnovski/mini.surround",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
-			-- Add custom surroundings to be used on top of builtin ones. For more
-			-- information with examples, see `:h MiniSurround.config`.
 			custom_surroundings = nil,
-
-			-- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
 			highlight_duration = 300,
-
-			-- Module mappings. Use `''` (empty string) to disable one.
-			-- INFO:
-			-- saiw surround with no whitespace
-			-- saw surround with whitespace
 			mappings = {
 				add = "<leader>ma", -- Add surround
 				delete = "<leader>md", -- Delete surrounding
@@ -70,8 +36,7 @@ return {
 			silent = false,
 		},
 	},
-	-- Get rid of whitespace
-	{
+{
 		"echasnovski/mini.trailspace",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
@@ -94,3 +59,4 @@ return {
 		end,
 	},
 }
+

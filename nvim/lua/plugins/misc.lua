@@ -1,75 +1,16 @@
--- Standalone plugins with less than 10 lines of config go here
 return {
-	{
+{
 		-- Tmux & split window navigation
 		"christoomey/vim-tmux-navigator",
 	},
-	{
-		-- Detect tabstop and shiftwidth automatically
-		"tpope/vim-sleuth",
-	},
-	{
-		-- Powerful Git integration for Vim
-		"tpope/vim-fugitive",
-	},
-	{
-		-- GitHub integration for vim-fugitive
-		"tpope/vim-rhubarb",
-	},
-	{
-		-- Hints keybinds
-		"folke/which-key.nvim",
-	},
-	{
-		-- Autoclose parentheses, brackets, quotes, etc.
+    {
+        	-- Autoclose parentheses, brackets, quotes, etc.
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		config = true,
 		opts = {},
-	},
-	{
-		"folke/todo-comments.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		optional = true,
-		keys = {
-			{
-				"<leader>pt",
-				function()
-					require("snacks").picker.todo_comments()
-				end,
-				desc = "Todo",
-			},
-			{
-				"<leader>pT",
-				function()
-					require("snacks").picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
-				end,
-				desc = "Todo/Fix/Fixme",
-			},
-		},
-	},
-	{
-		-- High-performance color highlighter
-		"norcalli/nvim-colorizer.lua",
-		config = function()
-			require("colorizer").setup()
-		end,
-	},
-	{
-		"numToStr/Comment.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"JoosepAlviste/nvim-ts-context-commentstring",
-		},
-		config = function()
-			local comment = require("Comment")
-			local ts_context_commentstring = require("ts_context_commentstring.integrations.comment_nvim")
-			comment.setup({
-				pre_hook = ts_context_commentstring.create_pre_hook(),
-			})
-		end,
-	},
-	{
+    },
+{
 		"windwp/nvim-ts-autotag",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
@@ -81,10 +22,69 @@ return {
 				},
 				per_filetype = {
 					html = {
-						enable_close = false,
+						enable_close = true,
 					},
 				},
 			})
 		end,
 	},
+    "roobert/tailwindcss-colorizer-cmp.nvim",
+    {
+        "NvChad/nvim-colorizer.lua",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        opts = {},
+        config = function()
+            local nvchadcolorizer = require("colorizer")
+            local tailwindcolorizer = require("tailwindcss-colorizer-cmp")
+
+            nvchadcolorizer.setup({
+                user_default_options = {
+                    tailwind = true,
+                },
+                filetypes = { "html", "css", "javascript", "typescript", "jsx", "tsx", "vue", "svelte" },
+            })
+
+            tailwindcolorizer.setup({
+                color_square_width = 2,
+            })
+
+            vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+                callback = function()
+                    vim.cmd("ColorizerAttachToBuffer")
+                end,
+            })
+
+        end,
+    },
+    -- NOTE: js,ts,jsx,tsx Auto Close Tags
+    {
+        "windwp/nvim-ts-autotag",
+        enabled = true,
+        ft = { "html", "xml", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte" },
+        config = function()
+            -- Independent nvim-ts-autotag setup
+            require("nvim-ts-autotag").setup({
+                opts = {
+                    enable_close = true,           -- Auto-close tags
+                    enable_rename = true,          -- Auto-rename pairs
+                    enable_close_on_slash = false, -- Disable auto-close on trailing `</`
+                },
+                per_filetype = {
+                    ["html"] = {
+                        enable_close = true, -- Disable auto-closing for HTML
+                    },
+                    ["typescriptreact"] = {
+                        enable_close = true, -- Explicitly enable auto-closing (optional, defaults to `true`)
+                    },
+                },
+            })
+        end,
+    },
 }
+-- {
+-- 		-- High-performance color highlighter
+-- 		"norcalli/nvim-colorizer.lua",
+-- 		config = function()
+-- 			require("colorizer").setup()
+-- 		end,
+-- 	}

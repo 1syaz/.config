@@ -1,8 +1,12 @@
 return {
 	"folke/zen-mode.nvim",
 	opts = {
-		-- your configuration comes here
-		-- or leave it empty to use the default settings
-		-- refer to the configuration section below
+		window = {
+			width = 1, -- 1 = 100% of the editor width (no padding)
+			options = {
+				number = true, -- show line numbers
+				relativenumber = true, -- optional
+			},
+		},
 	},
 }

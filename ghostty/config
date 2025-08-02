@@ -1,13 +1,16 @@
 # This is the configuration file for Ghostty.
 
-background-opacity = 0.95
-background-blur-radius = 40
-background-blur = true
+# background-opacity = 0.95
+# background-blur-radius = 40
+background-blur = false
 
 font-feature = -calt
 font-size = 12
+# font-family = "FiraCode Nerd Font"
 # font-family = "JetBrains Mono', Consolas, 'Courier New', monospace"
-theme = GruvboxDarkHard
+# theme = GruvboxDarkHard
+theme = "Adventure"
+# theme = "Dark Modern"
 # cursor-shape = "block"
 cursor-style = block
 cursor-style-blink = false
