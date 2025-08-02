@@ -93,15 +93,6 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.setloclist, { desc = "Open diagn
 -- Delete without yanking in visual mode
 vim.keymap.set("v", "d", '"_d', { noremap = true, silent = true })
 
--- Hightlight yanking
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
-})
-
 -- open error dialog
 -- vim.keymap.set("n", "gl", function() vim.diagnostic.openfloat() end, {desc = "Open Diagnostics in Float"})
 
@@ -122,7 +113,10 @@ vim.keymap.set("n", "<Esc>", function()
 			closed = true
 		end
 	end
+
 	if not closed then
 		vim.cmd("stopinsert") -- behaves like regular <Esc>
 	end
+
+	vim.cmd("nohlsearch")
 end, opts)

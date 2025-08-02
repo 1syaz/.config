@@ -23,32 +23,15 @@ return {
 		local autoformat_filetypes = {
 			"lua",
 		}
-		-- Create a keymap for vim.lsp.buf.implementation
-		-- vim.api.nvim_create_autocmd("LspAttach", {
-		--   callback = function(args)
-		--     local client = vim.lsp.get_client_by_id(args.data.client_id)
-		--     if not client then
-		--       return
-		--     end
-		--     if vim.tbl_contains(autoformat_filetypes, vim.bo.filetype) then
-		--       vim.api.nvim_create_autocmd("BufWritePre", {
-		--         buffer = args.buf,
-		--         callback = function()
-		--           vim.lsp.buf.format({
-		--             formatting_options = { tabSize = 2, insertSpaces = true },
-		--             bufnr = args.buf,
-		--             id = client.id,
-		--           })
-		--         end,
-		--       })
-		--     end
-		--   end,
-		-- })
 
 		-- LSP handlers with borders
 		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1d2021", fg = "#ebdbb2" })
 		vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1d2021", fg = "#665c54" })
 		-- vim.api.nvim_set_hl(0, "DiagnosticFloatingError", { link = "Pmenu" })
+
+		-- TEMP
+		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#f28b82" })
+		vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#f28b82" })
 
 		-- Set borders for LSP hover and signature help
 		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -63,7 +46,7 @@ return {
 
 		-- Configure diagnostics
 		vim.diagnostic.config({
-			virtual_text = false,
+			virtual_text = true,
 			underline = true,
 			update_in_insert = true,
 			float = {
@@ -114,6 +97,7 @@ return {
 				vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 				vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
 				vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+				vim.keymap.set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 			end,
 		})
 
@@ -254,7 +238,6 @@ return {
 				-- scroll documentation window
 				["<C-f>"] = cmp.mapping.scroll_docs(5),
 				["<C-u>"] = cmp.mapping.scroll_docs(-5),
-
 				-- toggle completion menu
 				["<C-e>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then

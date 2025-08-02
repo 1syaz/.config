@@ -8,13 +8,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		error("Error cloning lazy.nvim:\n" .. out)
 	end
-	-- yank highlight
-	vim.api.nvim_create_autocmd("TextYankPost", {
-		callback = function()
-			vim.highlight.on_yank()
-		end,
-	})
-
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = "*",
 		callback = function()
@@ -37,9 +30,13 @@ require("lazy").setup({
 	require("plugins.misc"),
 	require("plugins.dashboard"),
 	require("plugins.mini"),
-	-- require("plugins.lualine"),
+	require("plugins.wakatime"),
+	require("plugins.gitstuff"),
 	require("plugins.harpoon"),
-	-- require("plugins.indent-blankline"),
 	require("plugins.telescope"),
+	-- require("plugins.vim-visual-multi"),
 	require("plugins.lsp.lsp"),
+	require("plugins.lualine"),
+	require("plugins.zen"),
+	require("plugins.bufferline"),
 })
