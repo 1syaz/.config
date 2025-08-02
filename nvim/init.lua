@@ -16,11 +16,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
---  To update plugins you can run
---    :Lazy update
---
---
--- NOTE: Here is where you install your plugins.
 
 require("lazy").setup({
 	require("plugins.colortheme"),
