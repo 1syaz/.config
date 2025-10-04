@@ -4,25 +4,27 @@ return {
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"andrew-george/telescope-themes",		{ 			"nvim-telescope/telescope-fzf-native.nvim",
+		"andrew-george/telescope-themes",
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make",
 			cond = function()
 				return vim.fn.executable("make") == 1
 			end,
 		},
 		{ "nvim-telescope/telescope-ui-select.nvim" },
-		{ "echasnovski/mini.icons", enabled = vim.g.have_nerd_font },
+		-- { "echasnovski/mini.icons", enabled = vim.g.have_nerd_font },
 	},
 	config = function()
-        local telescope = require("telescope")
+		local telescope = require("telescope")
 
-        telescope.load_extension("fzf")
-        telescope.load_extension("themes")
-        telescope.load_extension("ui-select")
+		telescope.load_extension("fzf")
+		telescope.load_extension("themes")
+		telescope.load_extension("ui-select")
 
 		telescope.setup({
 			defaults = {
-                path_display = { "smart" },
+				path_display = { "smart" },
 				mappings = {
 					i = {
 						["<C-k>"] = require("telescope.actions").move_selection_previous, -- move to prev result
@@ -42,22 +44,21 @@ return {
 						return { "--hidden" }
 					end,
 				},
-		},
+			},
 			extensions = {
-                themes =  {
-                    enable_previewer = true,
-                    enable_live_preview = true,
-                    persist = {
-                        enabled = true,
-                        path = vim.fn.stdpath("config") .. "/lua/plugins/colortheme.lua"
-                    }
-                 },
+				themes = {
+					enable_previewer = true,
+					enable_live_preview = true,
+					persist = {
+						enabled = true,
+						path = vim.fn.stdpath("config") .. "/lua/plugins/colortheme.lua",
+					},
+				},
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
 				},
 			},
 		})
-
 
 		-- See `:help telescope.builtin`
 		local builtin = require("telescope.builtin")
@@ -71,7 +72,12 @@ return {
 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
-        vim.keymap.set("n", "<leader>ths", "<cmd>Telescope themes<CR>", { noremap = true, silent = true, desc = "Theme Switcher" })
+		vim.keymap.set(
+			"n",
+			"<leader>ths",
+			"<cmd>Telescope themes<CR>",
+			{ noremap = true, silent = true, desc = "Theme Switcher" }
+		)
 
 		-- Slightly advanced example of overriding default behavior and theme
 		vim.keymap.set("n", "<leader>/", function()

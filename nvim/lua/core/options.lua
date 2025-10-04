@@ -30,11 +30,16 @@ vim.o.numberwidth = 4
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hlsearch = false
-vim.o.incsearch = false
+vim.o.incsearch = true
 vim.o.whichwrap = "bs<>[]hl"
 
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
+
+vim.o.foldcolumn = "1" -- show fold column
+vim.o.foldlevel = 99 -- huge so all folds are open by default
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
 
 vim.cmd([[autocmd FileType * set formatoptions-=ro]])
 vim.opt.runtimepath:remove("/usr/share/vim/vimfiles")

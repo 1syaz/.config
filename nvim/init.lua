@@ -24,9 +24,10 @@ require("lazy").setup({
 	require("plugins.nvim-cmp"),
 	require("plugins.lsp.mason"),
 	require("plugins.lsp.lsp"),
+	require("plugins.lsp.typescript"),
 	require("plugins.linter"),
 	require("plugins.harpoon"),
 	require("plugins.zen"),
 	require("plugins.wakatime"),
-	-- require("plugins.gitstuff"),
+	require("plugins.gitsign"),
 })

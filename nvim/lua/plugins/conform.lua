@@ -2,13 +2,14 @@ return {
 	"stevearc/conform.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
-		require("conform").setup({
+		local conform = require("conform")
+		conform.setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
-				javascript = { "prettierd" },
-				javascriptreact = { "prettierd" },
-				typescript = { "prettierd" },
-				typescriptreact = { "prettierd" },
+				javascript = { "prettier" },
+				javascriptreact = { "prettier" },
+				typescript = { "prettier" },
+				typescriptreact = { "prettier" },
 				go = { "gofmt" },
 				-- rust = { "rustfmt", lsp_format = "fallback" },
 			},
@@ -26,5 +27,13 @@ return {
 				},
 			},
 		})
+
+		vim.keymap.set({ "n", "v" }, "<leader>gf", function()
+			conform.format({
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 1000,
+			})
+		end, { desc = "Format file or range (in visual mode)" })
 	end,
 }

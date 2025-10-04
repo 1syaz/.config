@@ -42,10 +42,11 @@ return {
 			},
 			signs = false,
 		})
+
 		-- NOTE :
 		-- Moved back from mason_lspconfig.setup_handlers from mason.lua file
 		-- as mason setup_handlers is deprecated & its causing issues with lsp settings
-		--
+
 		-- Setup servers
 		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -53,6 +54,18 @@ return {
 
 		lspconfig.gopls.setup({
 			capabilities = capabilities,
+		})
+
+		lspconfig.tailwindcss.setup({
+			capabilities = capabilities,
+			filetypes = {
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"typescriptreact",
+				"javascriptreact",
+			},
 		})
 
 		-- Config lsp servers here
@@ -92,32 +105,32 @@ return {
 		})
 
 		-- emmet_language_server
-		lspconfig.emmet_language_server.setup({
-			capabilities = capabilities,
-			filetypes = {
-				"css",
-				"eruby",
-				"html",
-				"javascript",
-				"javascriptreact",
-				"less",
-				"sass",
-				"scss",
-				"pug",
-				"typescriptreact",
-			},
-			init_options = {
-				includeLanguages = {},
-				excludeLanguages = {},
-				extensionsPath = {},
-				preferences = {},
-				showAbbreviationSuggestions = true,
-				showExpandedAbbreviation = "always",
-				showSuggestionsAsSnippets = false,
-				syntaxProfiles = {},
-				variables = {},
-			},
-		})
+		-- lspconfig.emmet_language_server.setup({
+		-- 	capabilities = capabilities,
+		-- 	filetypes = {
+		-- 		"css",
+		-- 		"eruby",
+		-- 		"html",
+		-- 		"javascript",
+		-- 		"javascriptreact",
+		-- 		"less",
+		-- 		"sass",
+		-- 		"scss",
+		-- 		"pug",
+		-- 		"typescriptreact",
+		-- 	},
+		-- 	init_options = {
+		-- 		includeLanguages = {},
+		-- 		excludeLanguages = {},
+		-- 		extensionsPath = {},
+		-- 		preferences = {},
+		-- 		showAbbreviationSuggestions = true,
+		-- 		showExpandedAbbreviation = "always",
+		-- 		showSuggestionsAsSnippets = false,
+		-- 		syntaxProfiles = {},
+		-- 		variables = {},
+		-- 	},
+		-- })
 
 		-- denols
 		lspconfig.denols.setup({
@@ -126,20 +139,31 @@ return {
 		})
 
 		-- ts_ls (replaces tsserver)
-		lspconfig.ts_ls.setup({
-			capabilities = capabilities,
-			root_dir = function(fname)
-				local util = lspconfig.util
-				return not util.root_pattern("deno.json", "deno.jsonc")(fname)
-					and util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git")(fname)
-			end,
-			single_file_support = false,
-			init_options = {
-				preferences = {
-					includeCompletionsWithSnippetText = true,
-					includeCompletionsForImportStatements = true,
-				},
-			},
-		})
+		-- lspconfig.ts_ls.setup({
+		-- 	capabilities = capabilities,
+		-- 	root_dir = function(fname)
+		-- 		local util = lspconfig.util
+		-- 		return not util.root_pattern("deno.json", "deno.jsonc")(fname)
+		-- 			and util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git")(fname)
+		-- 	end,
+		-- 	single_file_support = false,
+		-- 	init_options = {
+		-- 		preferences = {
+		-- 			includeCompletionsWithSnippetText = true,
+		-- 			includeCompletionsForImportStatements = true,
+		-- 		},
+		-- 	},
+		-- })
+
+		-- Hover float border
+		local _original_hover = vim.lsp.buf.hover
+
+		vim.lsp.buf.hover = function()
+			_original_hover({
+				border = "single",
+				max_width = 100,
+				max_height = 14,
+			})
+		end
 	end,
 }

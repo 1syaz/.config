@@ -5,13 +5,15 @@
 background-blur = false
 
 font-feature = -calt
-font-size = 12
+font-size = 16
 # font-family = "FiraCode Nerd Font"
 # font-family = "JetBrains Mono', Consolas, 'Courier New', monospace"
+
 # theme = GruvboxDarkHard
 theme = "Adventure"
+ # theme = "Arthur"
 # theme = "Dark Modern"
-# cursor-shape = "block"
+
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
@@ -21,7 +23,6 @@ window-save-state = always
 # keybinding
 keybind = ctrl+s>r=reload_config
 keybind = ctrl+s>n=new_window
-
 
 # tab
 keybind = cmd+s>c=new_tab
